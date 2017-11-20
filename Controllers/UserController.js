@@ -1,7 +1,7 @@
 import UserModel from '../models/UserModel';
 import jwt from 'jsonwebtoken';
-import { secret } from "../config";
-import {responseClient} from "../config/Utils";
+import { secret } from "../Config/config";
+import {responseClient} from "../Config/Utils";
 class UserController {
     constructor() {
 
