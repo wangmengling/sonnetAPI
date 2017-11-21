@@ -9,7 +9,7 @@ const logger = require('koa-logger')
 const index = require('./routes/index')
 const users = require('./routes/users')
 const admin = require('./routes/Admin/Index')
-// import dbconfig from './Config/db.config'
+import dbconfig from './Config/db.config'
 // const dbconfig = require('./Config/db.config');
 // error handler
 onerror(app)

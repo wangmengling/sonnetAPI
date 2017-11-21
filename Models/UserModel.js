@@ -5,7 +5,8 @@ var userSchema = new Schema({
   password: String,
   email:   String,
   phone:   String,
-  token:   String
+  token:   String,
+  role: String
 });
 var UserModel = mongoose.model('User', userSchema);
 export default UserModel;
