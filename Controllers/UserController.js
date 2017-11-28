@@ -9,9 +9,9 @@ class UserController {
 
     async register(ctx) {
         let data;
-        let { username, password } = ctx.request.body;
+        let { username, password, role } = ctx.request.body;
         ctx.body = ctx.request.body;
-        let user = new UserModel({ "username":username, "password":password });
+        let user = new UserModel({ "username":username, "password":password, "role":role });
         try {
             let ret = await UserModel.find({ "username": username });
             
@@ -40,7 +40,7 @@ class UserController {
         try {
             let ret = await UserModel.findOne({ "username": username });
             console.log(ret);
-            if (ret._id) {
+            if (ret && ret._id) {
                 const token = jwt.sign({
                     user_id: ret._id,
                     }, secret, {

@@ -10,5 +10,5 @@ module.exports =  (router) => {
     })
 
     router.post('/user/add',Auth,UserController.register);
-    router.post('/user/login',Auth,UserController.login);
+    router.post('/user/login',UserController.login);
 }
