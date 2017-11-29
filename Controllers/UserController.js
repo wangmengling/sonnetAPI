@@ -37,8 +37,10 @@ class UserController {
         // ctx.body = ctx.request.body;
         // return;
         let user = new UserModel({ "username":username, "password":password });
+        console.log(username);
         try {
-            let ret = await UserModel.findOne({ "username": username });
+            
+            let ret = await UserModel.findOne({ "username": username,"password":password });
             console.log(ret);
             if (ret && ret._id) {
                 const token = jwt.sign({
@@ -48,7 +50,6 @@ class UserController {
                 });
                 await UserModel.update({ _id: ret._id }, { $set: { token: token }});
                 ret.token = token
-                console.log(ret);
                 responseClient(ctx,"登录成功",ret);
             }
             else {
