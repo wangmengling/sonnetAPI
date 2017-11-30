@@ -1,6 +1,7 @@
 // const jwt = require('jsonwebtoken');
 import jwt from 'jsonwebtoken';
 import { responseClient } from "./Utils";
+import { secret } from "./config";
 //检查token是否过期
 module.exports = async ( ctx, next ) => {
     const token = ctx.get('Authorization');
@@ -13,7 +14,7 @@ module.exports = async ( ctx, next ) => {
     }
     let tokenContent;
     try {
-        tokenContent = await jwt.verify(token, 'MaoMboxBlog');     //如果token过期或验证失败，将抛出错误
+        tokenContent = await jwt.verify(token, secret);     //如果token过期或验证失败，将抛出错误
     } catch (err) {
         responseClient(ctx,"token失效","",401,401);
         return;

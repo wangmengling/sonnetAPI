@@ -8,8 +8,12 @@ class RoleViewController {
     }
 
     async add(ctx) {
-        let {name,pid} = ctx.request.body;
-        let role = new RoleModel({"name":name});
+        let {name} = ctx.request.body;
+        if (!name || name.length < 1) {
+            responseClient(ctx,'请输入正确角色名称',[],0);
+            return;
+        }
+        let role = new RoleModel({"name":name,"stauts":1});
         try {
             let roleOne = await RoleModel.findOne({"name":name});
             if (roleOne) {
