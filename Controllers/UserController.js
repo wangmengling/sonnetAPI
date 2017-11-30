@@ -11,6 +11,7 @@ class UserController {
         let data;
         let { username, password, role } = ctx.request.body;
         ctx.body = ctx.request.body;
+        // return;
         let user = new UserModel({ "username":username, "password":password, "role":role });
         try {
             let ret = await UserModel.find({ "username": username });
