@@ -66,12 +66,19 @@ class UserController {
 
     async list(ctx) {
         ctx.type = 'json';
-        let { pageIndex, pageSize } = ctx.request.body;
+        let { pageIndex, pageSize, params } = ctx.request.body;
+        console.log(ctx.request.body);
         try {
+            let userData;
             console.log(pageSize);
-            let userData = await UserModel.find().skip(pageIndex * pageSize).limit(pageSize);
+            console.log(pageIndex * pageSize);
+            // if (params) {
+                userData = await UserModel.find(params).skip(Number(pageIndex * pageSize)).limit(Number(pageSize));
+            // }else {
+            //     userData = await UserModel.find().limit( Number(pageSize)).skip( Number(pageIndex * pageSize));
+            // }
             let count = await UserModel.count();
-            responseClient(ctx,"",{pageTotal:Math.ceil(count/pageSize),list:userData});
+            responseClient(ctx,"",{pageTotal:Math.ceil(count/pageSize),count:count,list:userData});
         } catch (error) {
             responseClient(ctx,error.message,{},0);
         }
