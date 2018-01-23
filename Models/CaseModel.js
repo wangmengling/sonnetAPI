@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var caseSchema = new Schema({
-  name:  String,
+  title:  String,
   username: String,
   time: String,
   style: String,

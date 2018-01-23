@@ -6,13 +6,13 @@ class CaseController {
     }
     async addBase(ctx) {
         let body = ctx.request.body;
-        if (!body.name || body.name.length < 1) {
+        if (!body.title || body.title.length < 1) {
             responseClient(ctx,'请输入正确名称',[],0);
             return;
         }
         let cases = new CaseModel(body);
         try {
-            let caseOne = await CaseModel.findOne({"name":body.name});
+            let caseOne = await CaseModel.findOne({"title":body.title});
             if (caseOne) {
                 responseClient(ctx,"该案例已经存在",caseOne);
             } else {
