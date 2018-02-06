@@ -10,9 +10,11 @@ const cors = require('@koa/cors');
 const index = require('./routes/index')
 const users = require('./routes/users')
 const admin = require('./routes/Admin/Index')
+
 import dbconfig from './Config/db.config'
 // const dbconfig = require('./Config/db.config');
 // error handler
+
 onerror(app)
 
 app.use(cors());
@@ -36,11 +38,12 @@ app.use(async (ctx, next) => {
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
 
+
 // routes
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 app.use(admin.routes(), admin.allowedMethods())
-
+// const upload = require('./untils/Upload');
 // error-handling
 app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)

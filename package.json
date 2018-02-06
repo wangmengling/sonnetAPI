@@ -1,16 +1,19 @@
 {
-  "name": "sonnetAPI",
+  "name": "sonnetapi",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "start": "node bin/www",
-    "dev": "./node_modules/.bin/nodemon bin/www  --exec babel-node",
+    "dev": "./node_modules/.bin/nodemon bin/www   --exec babel-node",
     "prd": "pm2 start bin/www",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "debug": "nodemon --debug  bin/www   --exec babel-node",
+    "inspect": "nodemon --inspect  bin/www   --exec babel-node"
   },
   "dependencies": {
     "@koa/cors": "^2.2.1",
     "debug": "^2.6.3",
+    "inspect": "0.0.2",
     "jsonwebtoken": "^8.1.0",
     "koa": "^2.2.0",
     "koa-bodyparser": "^3.2.0",
