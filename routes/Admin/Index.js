@@ -1,5 +1,5 @@
 // upload
-
+import upload from "../../untils/Upload";
 const router = require('koa-router')()
 const User  = require( "./User");
 import Role from "./Role";
@@ -9,7 +9,7 @@ import Color from "./Color";
 import Case from "./Case";
 import Upload from "./Upload";
 router.prefix('/admin/api/v1')
-import upload from "../../untils/Upload";
+
 User(router);
 Role(router);
 CaseCategory(router);

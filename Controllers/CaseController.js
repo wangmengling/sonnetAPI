@@ -24,6 +24,29 @@ class CaseController {
         }
     }
 
+    async updateCase(ctx) {
+        // let {thumbUrl,_id} = ctx.request.body;
+        if (!ctx.request.body._id) {
+            responseClient(ctx,'修改错误',[],0);
+            return;
+        }
+        // let cases = new CaseModel({"_id":ctx.request.body._id});
+        try {
+            let caseOne = await CaseModel.findOne({"_id":ctx.request.body._id});
+            if (!caseOne) {
+                responseClient(ctx,"操作失败",caseOne);
+            } else {
+                try {
+                    let caseData = await CaseModel.findOneAndUpdate({_id:ctx.request.body._id},ctx.request.body);
+                    responseClient(ctx,"修改成功",caseData);
+                } catch (error) {
+                    responseClient(ctx,"修改失败",error,0,500);
+                }
+            }
+        } catch (error) {
+            responseClient(ctx,'修改错误',error.message,0,error.code);
+        }  
+    }
 
 }
 export default new CaseController();

@@ -6,7 +6,9 @@ var caseSchema = new Schema({
   time: String,
   style: String,
   color: String,
-  address: String
+  address: String,
+  thumbUrl: String,
+  videoUrl: String
 });
 var CaseModel = mongoose.model('Case', caseSchema);
 export default CaseModel;
