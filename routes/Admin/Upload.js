@@ -5,9 +5,8 @@ import Auth from "../../Config/Auth";
 
 module.exports = (router,upload) => {
     router.post('/upload/video',upload.single('video'),UploadController.uploadVideo);
-    // router.post('/upload/thumb',UploadController.uploadThumb);
     router.post('/upload/thumb',upload.single('thumb'),UploadController.uploadThumb);
-    router.post('/upload/image',UploadController.uploadImage);
+    router.post('/upload/image',upload.array('file',1),UploadController.uploadImage);
 }
 
 

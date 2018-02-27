@@ -31,8 +31,7 @@ class UploadController {
         // 创建progress stream的实例
         var fileNames = ctx.req.file.filename;
         if (fileNames.length > 0) {
-            var pathUrl = '/statics/uploads/' + fileNames;
-            let body = { _id: ctx.req.body._id, thumbUrl: pathUrl }
+            let body = { _id: ctx.req.body._id, thumbUrl: ctx.req.file.path }
             ctx.request.body = body
             await CaseController.updateCase(ctx);
             // responseClient(ctx, "缩略图上传成功", fileNames);
@@ -111,66 +110,13 @@ class UploadController {
     // }
 
     async uploadImage(ctx) {
-        var form = await new multiparty.Form({
-            uploadDir: path.join(__dirname, '../statics/uploads')
-        });
-        var revecive = 0, all = 0;
-        form.on('error', (err) => {
-            console.log('Error parsing form: ' + err.stack);
-        });
-
-        await form.parse(ctx.req, (err, fields, files) => {
-            var obj = {};
-
-            var filesTmp = JSON.stringify(files, null, 2);
-            if (err) {
-                console.log('parse error: ' + err);
-            }
-            else {
-
-                console.log('parse files: ' + filesTmp);
-                var thumb = files.file;
-                var uploadedPath = thumb[0].path;
-                var dstPath = path.join(__dirname, '../statics/uploads/' + thumb[0].originalFilename);
-                //重命名为真实文件名
-                fs.rename(uploadedPath, dstPath, function (err) {
-                    if (err) {
-                        // console.log('rename error: ' + err);
-                        // responseClient(ctx,"上传失败",dstPath,0);
-                        ctx.body = "";
-                    } else {
-                        // console.log('rename ok');
-                        // res.writeHead(200, { 'content-type': 'text/plain;charset=utf-8' });
-                        // responseClient(ctx,"上传成功",dstPath);
-                        ctx.body = "";
-                    }
-                });
-            }
-        });
-
-        form.on('progress', (already, notyet) => {
-            // if(!part.filename) {
-            //   console.log('got fields named ' + part.name);
-            // }
-            console.log('already: ' + already);
-            revecive = already;
-            console.log('notyet: ' + notyet);
-            all = notyet;
-            // this.body = already / notyet;
-            // if(part.filename) {
-            //   count++;
-            //   console.log('go file named ' + part.name);
-            //   part.resume();
-            // }
-            // this.body = 'test';
-            // part.on('error', (err) => {
-            //   console.log(err);
-            // });
-        });
-
-        form.on('close', () => {
-            console.log('upload completed');
-        });
+        // 创建progress stream的实例
+        var files = ctx.req.files;
+        if (files.length > 0) {
+            responseClient(ctx, "文件上传成功", ctx.req.files[0].path);
+        } else {
+            responseClient(ctx, "文件上传失败", fileNames, 0);
+        }
     }
 }
 

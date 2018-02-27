@@ -8,7 +8,8 @@ var caseSchema = new Schema({
   color: String,
   address: String,
   thumbUrl: String,
-  videoUrl: String
+  videoUrl: String,
+  imageUrl:[[]]
 });
 var CaseModel = mongoose.model('Case', caseSchema);
 export default CaseModel;
