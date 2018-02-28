@@ -9,6 +9,7 @@ var caseSchema = new Schema({
   address: String,
   thumbUrl: String,
   videoUrl: String,
+  createTime:String,
   imageUrl:[[]]
 });
 var CaseModel = mongoose.model('Case', caseSchema);

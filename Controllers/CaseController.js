@@ -4,12 +4,28 @@ class CaseController {
     constructor() {
 
     }
+
+    async list(ctx) {
+        ctx.type = 'json';
+        let { pageIndex, pageSize, params } = ctx.request.body;
+        try {
+            let caseData;
+            caseData = await CaseModel.find(params).skip(Number(pageIndex * pageSize)).limit(Number(pageSize)).sort({'createTime':-1})
+            let count = await CaseModel.count();
+            responseClient(ctx,"",{pageTotal:Math.ceil(count/pageSize),count:count,list:caseData});
+        } catch (error) {
+            responseClient(ctx,error.message,{},0);
+        }
+    }
+
     async addBase(ctx) {
         let body = ctx.request.body;
         if (!body.title || body.title.length < 1) {
             responseClient(ctx,'请输入正确名称',[],0);
             return;
         }
+        var createTimeStamp = new Data().getTime();
+        body.createTime = createTimeStamp;
         let cases = new CaseModel(body);
         try {
             let caseOne = await CaseModel.findOne({"title":body.title});
