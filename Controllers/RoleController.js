@@ -27,6 +27,26 @@ class RoleViewController {
         }
     }
 
+    async delete(ctx) {
+        let {name} = ctx.request.body;
+        if (!name || name.length < 1) {
+            responseClient(ctx,'请输入正确角色名称',[],0);
+            return;
+        }
+        let role = new RoleModel({"name":name,"stauts":1});
+        try {
+            let roleOne = await RoleModel.findOne({"name":name});
+            if (roleOne) {
+                responseClient(ctx,"该角色已经存在",roleOne);
+            } else {
+                let ret = await role.save();
+                responseClient(ctx,"添加成功",ret);
+            }
+        } catch (error) {
+            responseClient(ctx,'添加错误',error.message,0,error.code);
+        }
+    }
+
     async list(ctx) {
         try {
             let data = await RoleModel.find();
