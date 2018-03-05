@@ -9,6 +9,7 @@ module.exports =  (router) => {
         ctx.body = 'this is a admin/bar response'
     })
 
-    router.post('/user/add',Auth,UserController.register);
+    router.post('/user/add',UserController.register);
     router.post('/user/login',UserController.login);
+    router.post('/user/list',UserController.list);
 }

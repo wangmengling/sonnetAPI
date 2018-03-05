@@ -10,7 +10,11 @@ class UserController {
     async register(ctx) {
         let data;
         let { username, password, role } = ctx.request.body;
+        if (!password) {
+            password = username+role;
+        }
         ctx.body = ctx.request.body;
+        // return;
         let user = new UserModel({ "username":username, "password":password, "role":role });
         try {
             let ret = await UserModel.find({ "username": username });
@@ -57,6 +61,26 @@ class UserController {
             }
         } catch (error) {
             responseClient(ctx,error.message,error.message,500);
+        }
+    }
+
+    async list(ctx) {
+        ctx.type = 'json';
+        let { pageIndex, pageSize, params } = ctx.request.body;
+        console.log(ctx.request.body);
+        try {
+            let userData;
+            console.log(pageSize);
+            console.log(pageIndex * pageSize);
+            // if (params) {
+                userData = await UserModel.find(params).skip(Number(pageIndex * pageSize)).limit(Number(pageSize));
+            // }else {
+            //     userData = await UserModel.find().limit( Number(pageSize)).skip( Number(pageIndex * pageSize));
+            // }
+            let count = await UserModel.count();
+            responseClient(ctx,"",{pageTotal:Math.ceil(count/pageSize),count:count,list:userData});
+        } catch (error) {
+            responseClient(ctx,error.message,{},0);
         }
     }
 }
