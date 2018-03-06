@@ -18,13 +18,32 @@ class CaseController {
         }
     }
 
+    async detailById(ctx) {
+        if (!ctx.request.body._id) {
+            responseClient(ctx,'参数错误',[],0);
+            return;
+        }
+        try {
+            let caseOne = await CaseModel.findOne({"_id":ctx.request.body._id});
+            if (!caseOne) {
+                responseClient(ctx,"操作失败","");
+            } else {
+                responseClient(ctx,"查询成功",caseOne);
+                
+            }
+        } catch (error) {
+            responseClient(ctx,'查询失败',error.message,0,error.code);
+        } 
+    }
+
     async addBase(ctx) {
         let body = ctx.request.body;
+        console.log(body);
         if (!body.title || body.title.length < 1) {
             responseClient(ctx,'请输入正确名称',[],0);
             return;
         }
-        var createTimeStamp = new Data().getTime();
+        var createTimeStamp = new Date().getTime();
         body.createTime = createTimeStamp;
         let cases = new CaseModel(body);
         try {

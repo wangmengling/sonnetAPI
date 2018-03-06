@@ -31,7 +31,7 @@ class UploadController {
         // 创建progress stream的实例
         var fileNames = ctx.req.file.filename;
         if (fileNames.length > 0) {
-            let body = { _id: ctx.req.body._id, thumbUrl: ctx.req.file.path }
+            let body = { _id: ctx.req.body._id, thumbUrl: "/"+ctx.req.file.path }
             ctx.request.body = body
             await CaseController.updateCase(ctx);
             // responseClient(ctx, "缩略图上传成功", fileNames);
@@ -113,7 +113,7 @@ class UploadController {
         // 创建progress stream的实例
         var files = ctx.req.files;
         if (files.length > 0) {
-            responseClient(ctx, "文件上传成功", ctx.req.files[0].path);
+            responseClient(ctx, "文件上传成功", "/"+ctx.req.files[0].path);
         } else {
             responseClient(ctx, "文件上传失败", fileNames, 0);
         }
