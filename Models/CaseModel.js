@@ -3,6 +3,8 @@ var Schema = mongoose.Schema;
 var caseSchema = new Schema({
   title:  String,
   username: String,
+  contact: String,
+  phone: String,
   time: String,
   style: String,
   color: String,

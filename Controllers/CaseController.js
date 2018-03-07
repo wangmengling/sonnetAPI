@@ -65,6 +65,7 @@ class CaseController {
             return;
         }
         try {
+            console.log(ctx.request.body);
             let caseOne = await CaseModel.findOne({"_id":ctx.request.body._id});
             if (!caseOne) {
                 responseClient(ctx,"操作失败",caseOne);
