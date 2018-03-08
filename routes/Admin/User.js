@@ -12,4 +12,5 @@ module.exports =  (router) => {
     router.post('/user/add',UserController.register);
     router.post('/user/login',UserController.login);
     router.post('/user/list',UserController.list);
+    router.post('/user/update',UserController.update);
 }

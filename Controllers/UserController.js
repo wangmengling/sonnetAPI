@@ -13,7 +13,7 @@ class UserController {
         if (!password) {
             password = username+role;
         }
-        ctx.body = ctx.request.body;
+        // ctx.body = ctx.request.body;
         // return;
         let user = new UserModel({ "username":username, "password":password, "role":role });
         try {
@@ -33,6 +33,28 @@ class UserController {
         } catch (error) {
             responseClient(ctx,"注册错误",error.message,0);
         }
+    }
+
+    async update(ctx) {
+        if (!ctx.request.body._id) {
+            responseClient(ctx,'修改错误',[],0);
+            return;
+        }
+        try {
+            let userOne = await UserModel.findOne({"_id":ctx.request.body._id});
+            if (!userOne) {
+                responseClient(ctx,"操作失败",userOne);
+            } else {
+                try {
+                    let userData = await UserModel.findOneAndUpdate({_id:ctx.request.body._id},ctx.request.body);
+                    responseClient(ctx,"修改成功",userData);
+                } catch (error) {
+                    responseClient(ctx,"修改失败",error,0,500);
+                }
+            }
+        } catch (error) {
+            responseClient(ctx,'修改错误',error.message,0,error.code);
+        }  
     }
 
     async login(ctx) {
