@@ -8,6 +8,10 @@ class CaseController {
     async list(ctx) {
         ctx.type = 'json';
         let { pageIndex, pageSize, params } = ctx.request.body;
+        // let { title } = params;
+        // if (title.length > 0) {
+        //     params.title = {$regex: title};
+        // }
         try {
             let caseData;
             caseData = await CaseModel.find(params).skip(Number(pageIndex * pageSize)).limit(Number(pageSize)).sort({'createTime':-1})
@@ -64,6 +68,7 @@ class CaseController {
             responseClient(ctx,'修改错误',[],0);
             return;
         }
+        console.log(ctx.request.body);
         try {
             console.log(ctx.request.body);
             let caseOne = await CaseModel.findOne({"_id":ctx.request.body._id});

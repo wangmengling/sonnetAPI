@@ -9,6 +9,7 @@ var caseSchema = new Schema({
   style: String,
   color: String,
   address: String,
+  position: String, //室内室外   方位
   thumbUrl: String,
   videoUrl: String,
   createTime:String,
