@@ -5,6 +5,7 @@ var fs = require('fs');
 var multiparty = require('multiparty');
 // var util = require('util');
 var path = require('path');
+var sizeOf = require('image-size');
 import CaseModel from "../Models/CaseModel";
 import CaseController from "./CaseController";
 class UploadController {
@@ -113,7 +114,15 @@ class UploadController {
         // 创建progress stream的实例
         var files = ctx.req.files;
         if (files.length > 0) {
-            responseClient(ctx, "文件上传成功", "/"+ctx.req.files[0].path);
+
+            try {
+                const dimensions = await sizeOf(ctx.req.files[0].path);
+                console.log(dimensions.width, dimensions.height);
+                responseClient(ctx, "文件上传成功", {src:"/"+ctx.req.files[0].path,width:dimensions.width,height:dimensions.height});
+            } catch (err) {
+                console.error(err);
+            }
+
         } else {
             responseClient(ctx, "文件上传失败", fileNames, 0);
         }
