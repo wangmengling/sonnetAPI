@@ -1,5 +1,5 @@
 import upload from "../untils/Upload";
-import { responseClient } from "../config/Utils";
+import { responseClient } from "../Configonfig/Utils";
 var progressStream = require('progress-stream');
 var fs = require('fs');
 var multiparty = require('multiparty');
