@@ -1,4 +1,4 @@
-import UserModel from '../models/UserModel';
+import UserModel from '../Models/UserModel';
 import jwt from 'jsonwebtoken';
 import { secret } from "../Config/config";
 import {responseClient} from "../Config/Utils";
